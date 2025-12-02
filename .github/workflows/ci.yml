@@ -1,0 +1,21 @@
+name: first CI Workflow
+
+on: [push] 
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve code
+        uses: actions/checkout@v3
+
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.25.4'
+
+      - name: check if code builds
+        run: go build -v ./...
+
+      - name: Check Dockerfile validity
+        run: docker build . -t my-app-go:latest
